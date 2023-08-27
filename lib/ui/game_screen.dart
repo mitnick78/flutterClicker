@@ -7,19 +7,52 @@ import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
 
-class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
+class GameScreen extends StatelessWidget {
+  final gamesManager = GamesManager();
 
+  GameScreen({super.key});
   @override
-  State<GameScreen> createState() => _GameScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text("Clicker"),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: FutureBuilder(
+          future: gamesManager.loadGamesListFromLocalDatas(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData || snapshot.hasError) {
+              return _GameScreenContent(
+                gamesManager: gamesManager,
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
+    );
+  }
 }
 
-class _GameScreenState extends State<GameScreen> {
-  final gamesManager = GamesManager();
+class _GameScreenContent extends StatefulWidget {
+  final GamesManager gamesManager;
+  const _GameScreenContent({required this.gamesManager});
+  @override
+  State<_GameScreenContent> createState() =>
+      __GameScreenContentState(gamesManager);
+}
+
+class __GameScreenContentState extends State<_GameScreenContent> {
+  final GamesManager gamesManager;
   var _currentPlayerName = "";
   var _currentNameFieldController = TextEditingController();
 
   final List<Game> _resultList = [];
+
+  __GameScreenContentState(this.gamesManager);
 
   _buttonClickHide() {
     setState(() {
@@ -57,45 +90,36 @@ class _GameScreenState extends State<GameScreen> {
     final bestGame = gamesManager.bestGame;
     final currentGame = gamesManager.currentGame;
     final isInProgress = gamesManager.isGameInProgress;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text("Clicker"),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          if (isInProgress == false)
-            TextField(
-              autocorrect: false,
-              onChanged: _currentUserChanged,
-              controller: _currentNameFieldController,
-            ),
-          if (bestGame != null)
-            Text(S.current.point_record(bestGame.playerName, bestGame.score)),
-          if (currentGame != null)
-            Text(S.current.count_click(currentGame.score))
-          else
-            Text(S.of(context).before_text_game),
-          if (isInProgress)
-            IconButton(
-                onPressed: _ButtonClickPlus, icon: const Icon(Icons.plus_one))
-          else
-            ElevatedButton(
-                onPressed: () => {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => HallOfFameScreen(
-                              gamelist: gamesManager.bestGameLis))),
-                    },
-                child: Text("Hall of fame")),
-          const Spacer(),
-          if (isInProgress == false)
-            ElevatedButton(
-                onPressed: _buttonClickHide,
-                child: Text(S.of(context).game_start_button)),
-        ]),
-      ),
-    );
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      if (isInProgress == false)
+        TextField(
+          autocorrect: false,
+          onChanged: _currentUserChanged,
+          controller: _currentNameFieldController,
+        ),
+      if (bestGame != null)
+        Text(S.current.point_record(bestGame.playerName, bestGame.score)),
+      if (currentGame != null)
+        Text(S.current.count_click(currentGame.score))
+      else
+        Text(S.of(context).before_text_game),
+      if (isInProgress)
+        IconButton(
+            onPressed: _ButtonClickPlus, icon: const Icon(Icons.plus_one))
+      else
+        ElevatedButton(
+            onPressed: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HallOfFameScreen(
+                          gamelist: gamesManager.bestGameLis))),
+                },
+            child: Text("Hall of fame")),
+      const Spacer(),
+      if (isInProgress == false)
+        ElevatedButton(
+            onPressed: _buttonClickHide,
+            child: Text(S.of(context).game_start_button)),
+    ]);
   }
 }
