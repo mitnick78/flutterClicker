@@ -1,0 +1,7 @@
+{
+  "game_start_button": "Game start",
+  "point_record": "Current best score: {bestPlayerName}  {numberClic}",
+  "count_click": "Clic count : {numberClick}",
+  "result_score_points": "{score, plural, zero{no point} one{1 point} other{{score} points}}",
+  "before_text_game": "Enter your first name"
+}

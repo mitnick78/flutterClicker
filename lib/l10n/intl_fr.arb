@@ -1,0 +1,7 @@
+{
+  "game_start_button": "Commencer la partie",
+  "point_record": "Nombre de point: {bestPlayerName}  {numberClic}",
+  "count_click": "Nombre de clic : {numberClick}",
+  "result_score_points": "{score, plural, zero{pas point} one{1 point} other{{score} points}}",
+  "before_text_game": "Entrez votre nom prénom"
+}

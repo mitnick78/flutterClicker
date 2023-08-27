@@ -1,0 +1,132 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'intl/messages_all.dart';
+
+// **************************************************************************
+// Generator: Flutter Intl IDE plugin
+// Made by Localizely
+// **************************************************************************
+
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
+
+class S {
+  S();
+
+  static S? _current;
+
+  static S get current {
+    assert(_current != null,
+        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    return _current!;
+  }
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+
+  static Future<S> load(Locale locale) {
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
+    return initializeMessages(localeName).then((_) {
+      Intl.defaultLocale = localeName;
+      final instance = S();
+      S._current = instance;
+
+      return instance;
+    });
+  }
+
+  static S of(BuildContext context) {
+    final instance = S.maybeOf(context);
+    assert(instance != null,
+        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    return instance!;
+  }
+
+  static S? maybeOf(BuildContext context) {
+    return Localizations.of<S>(context, S);
+  }
+
+  /// `Game start`
+  String get game_start_button {
+    return Intl.message(
+      'Game start',
+      name: 'game_start_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current best score: {bestPlayerName}  {numberClic}`
+  String point_record(Object bestPlayerName, Object numberClic) {
+    return Intl.message(
+      'Current best score: $bestPlayerName  $numberClic',
+      name: 'point_record',
+      desc: '',
+      args: [bestPlayerName, numberClic],
+    );
+  }
+
+  /// `Clic count : {numberClick}`
+  String count_click(Object numberClick) {
+    return Intl.message(
+      'Clic count : $numberClick',
+      name: 'count_click',
+      desc: '',
+      args: [numberClick],
+    );
+  }
+
+  /// `{score, plural, zero{no point} one{1 point} other{{score} points}}`
+  String result_score_points(num score) {
+    return Intl.plural(
+      score,
+      zero: 'no point',
+      one: '1 point',
+      other: '$score points',
+      name: 'result_score_points',
+      desc: '',
+      args: [score],
+    );
+  }
+
+  /// `Enter your first name`
+  String get before_text_game {
+    return Intl.message(
+      'Enter your first name',
+      name: 'before_text_game',
+      desc: '',
+      args: [],
+    );
+  }
+}
+
+class AppLocalizationDelegate extends LocalizationsDelegate<S> {
+  const AppLocalizationDelegate();
+
+  List<Locale> get supportedLocales {
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'fr'),
+    ];
+  }
+
+  @override
+  bool isSupported(Locale locale) => _isSupported(locale);
+  @override
+  Future<S> load(Locale locale) => S.load(locale);
+  @override
+  bool shouldReload(AppLocalizationDelegate old) => false;
+
+  bool _isSupported(Locale locale) {
+    for (var supportedLocale in supportedLocales) {
+      if (supportedLocale.languageCode == locale.languageCode) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
